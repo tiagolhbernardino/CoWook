@@ -419,3 +419,84 @@ a.desc:after {
 [data-bs-theme="dark"] .extension-card:hover {
     box-shadow: 0 0 0 1px var(--bs-border-color), 0 8px 24px rgba(0, 0, 0, .4) !important;
 }
+/* =========================================================
+   ESTILO DO CARTÃO DE REGISTO (COWOOK - MOCKUP)
+   ========================================================= */
+
+.cowook-auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 82vh;
+    padding: 20px;
+}
+
+.cowook-auth-card {
+    background-color: #0d0d0d !important;
+    border: 2px solid #cccccc !important;
+    border-radius: 45px !important;
+    padding: 35px 30px !important;
+    max-width: 420px !important;
+    width: 100% !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8) !important;
+    color: #ffffff !important;
+}
+
+.cowook-auth-title {
+    color: #ef6603 !important;
+    font-size: 2.3rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    margin-bottom: 25px !important;
+}
+
+.cowook-auth-label {
+    color: #ffffff !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 4px !important;
+    display: block;
+}
+
+.cowook-auth-input {
+    background-color: #161616 !important;
+    border: 1px solid #777777 !important;
+    color: #ffffff !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    font-size: 0.9rem !important;
+    width: 100% !important;
+}
+
+.cowook-auth-input:focus {
+    border-color: #ef6603 !important;
+    box-shadow: 0 0 0 0.2rem rgba(239, 102, 3, 0.25) !important;
+}
+
+.cowook-auth-btn {
+    background-color: #161616 !important;
+    color: #ffffff !important;
+    border: 1px solid #cccccc !important;
+    border-radius: 10px !important;
+    padding: 8px 35px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cowook-auth-btn:hover {
+    background-color: #ef6603 !important;
+    border-color: #ef6603 !important;
+}
+
+.cowook-auth-link {
+    color: #1a66cc !important;
+    text-decoration: none !important;
+    font-weight: 600;
+}
+
+.cowook-auth-link:hover {
+    color: #4d94ff !important;
+    text-decoration: underline !important;
+}

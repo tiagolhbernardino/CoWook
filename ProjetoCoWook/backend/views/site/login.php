@@ -64,7 +64,7 @@ $labelOptions = ['class' => 'form-label fw-semibold small'];
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
                 <div class="mb-3">
-                    <?= $form->field($model, 'username', [
+                    <?= $form->field($model, 'email', [
                         'options' => ['class' => 'mb-0'],
                         'template' => sprintf($htmlIcon, '&#128100;'),
                         'inputOptions' => [
@@ -72,7 +72,7 @@ $labelOptions = ['class' => 'form-label fw-semibold small'];
                             'placeholder' => 'username',
                             'autofocus' => true,
                         ],
-                    ])->textInput()->label('Your Username', $labelOptions) ?>
+                    ])->textInput()->label('Your Email', $labelOptions) ?>
                 </div>
 
                 <div class="mb-3">

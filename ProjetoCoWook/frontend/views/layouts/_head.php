@@ -1,44 +1,29 @@
 <?php
+use yii\helpers\Html;
+?>
+<meta charset="<?= Yii::$app->charset ?>">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<?php $this->head() ?>
 
-declare(strict_types=1);
+<!-- Favicon -->
+<link href="<?= Yii::$app->request->baseUrl ?>/img/favicon.ico" rel="icon">
 
-/** @var yii\web\View $this */
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-use frontend\assets\AppAsset;
+<!-- Icon Font Stylesheet -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-AppAsset::register($this);
+<!-- Libraries Stylesheet -->
+<link href="<?= Yii::$app->request->baseUrl ?>/lib/animate/animate.min.css" rel="stylesheet">
+<link href="<?= Yii::$app->request->baseUrl ?>/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="<?= Yii::$app->request->baseUrl ?>/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-$this->registerCsrfMetaTags();
-$this->registerMetaTag(
-    ['charset' => Yii::$app->charset],
-    'charset',
-);
-$this->registerMetaTag(
-    [
-        'name' => 'viewport',
-        'content' => 'width=device-width, initial-scale=1',
-    ],
-);
-if (!empty($this->params['meta_description'])) {
-    $this->registerMetaTag(
-        [
-            'name' => 'description',
-            'content' => $this->params['meta_description'],
-        ],
-    );
-}
-if (!empty($this->params['meta_keywords'])) {
-    $this->registerMetaTag(
-        [
-            'name' => 'keywords',
-            'content' => $this->params['meta_keywords'],
-        ],
-    );
-}
-$this->registerLinkTag(
-    [
-        'rel' => 'icon',
-        'type' => 'image/x-icon',
-        'href' => Yii::getAlias('@web/favicon.ico'),
-    ],
-);
+<!-- Customized Bootstrap Stylesheet -->
+<link href="<?= Yii::$app->request->baseUrl ?>/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="<?= Yii::$app->request->baseUrl ?>/css/style.css" rel="stylesheet">

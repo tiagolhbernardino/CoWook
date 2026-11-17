@@ -9,33 +9,41 @@ use common\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
 
-$this->render('_head');
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100" data-bs-theme="light">
-<head>
-    <?php $this->head() ?>
-    <title><?= Html::encode($this->title) ?></title>
-</head>
-<body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
+    <!DOCTYPE html>
+    <html lang="<?= Yii::$app->language ?>" class="h-100" data-bs-theme="light">
+    <head>
+        <meta charset="<?= Yii::$app->charset ?>">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <?php $this->head() ?>
+        <title><?= Html::encode($this->title) ?></title>
 
-<?= $this->render('_header') ?>
+        <!-- CORREÇÃO: O _head renderiza-se DENTRO da tag <head> -->
+        <?= $this->render('_head') ?>
+    </head>
+    <body class="d-flex flex-column h-100">
+    <?php $this->beginBody() ?>
 
-<main id="main" class="flex-grow-1" role="main">
-    <div class="container">
-        <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-        <?php endif ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-</main>
+    <!-- Cabeçalho (Navbar do template) -->
+    <?= $this->render('_header') ?>
 
-<?= $this->render('_footer') ?>
+    <main id="main" class="flex-grow-1" role="main">
+        <!-- Nota: Se o template do HTML Codex usar secções de largura total (full-width),
+             podes querer remover a classe 'container' desta div para o design não ficar limitado às margens. -->
+        <div class="container">
+            <?php if (!empty($this->params['breadcrumbs'])): ?>
+                <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+            <?php endif ?>
+            <?= Alert::widget() ?>
+            <?= $content ?>
+        </div>
+    </main>
 
-<?php $this->endBody() ?>
-</body>
-</html>
+    <!-- Rodapé do template -->
+    <?= $this->render('_footer') ?>
+
+    <?php $this->endBody() ?>
+    </body>
+    </html>
 <?php $this->endPage() ?>

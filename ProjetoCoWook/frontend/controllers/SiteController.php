@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace frontend\controllers;
 
-use common\models\LoginForm;
+use frontend\models\LoginForm;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
@@ -88,9 +88,22 @@ class SiteController extends Controller
      *
      * @return string
      */
+    /**
+     * Displays homepage.
+     *
+     * @return string
+     */
     public function actionIndex(): string
     {
-        return $this->render('index');
+        // Listas temporárias para as caixas de seleção funcionarem perfeitamente
+        $cidades = ['Leiria', 'Lisboa', 'Coimbra', 'Porto'];
+        $tiposEspaco = ['Suite', 'Quarto Duplo', 'Apartamento', 'Penthouse'];
+
+        // Envia estes dados para a view index.php
+        return $this->render('index', [
+            'cidades' => $cidades,
+            'tiposEspaco' => $tiposEspaco,
+        ]);
     }
 
     /**
@@ -98,15 +111,27 @@ class SiteController extends Controller
      *
      * @return string|Response
      */
-    public function actionLogin(): string|Response
+    public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
+            // Se já estiver logado e for staff, envia para o Backend
+            if (Yii::$app->user->can('acederBackoffice')) {
+                $backendUrl = str_replace('/frontend/web', '/backend/web', Yii::$app->request->baseUrl);
+                return $this->redirect($backendUrl . '/index.php');
+            }
             return $this->goHome();
         }
 
         $model = new LoginForm();
-
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            // Se tiver permissão 'acederBackoffice' (sys_admin, rececionista ou equipa_de_limpeza)
+            // redireciona automaticamente para o Backend
+            if (Yii::$app->user->can('acederBackoffice')) {
+                $backendUrl = str_replace('/frontend/web', '/backend/web', Yii::$app->request->baseUrl);
+                return $this->redirect($backendUrl . '/index.php');
+            }
+
+            // Se for apenas Cliente, continua no Front-Office
             return $this->goBack();
         }
 
@@ -115,9 +140,7 @@ class SiteController extends Controller
         return $this->render('login', [
             'model' => $model,
         ]);
-    }
-
-    /**
+    }    /**
      * Logs out the current user.
      *
      * @return Response
@@ -178,14 +201,22 @@ class SiteController extends Controller
     public function actionSignup(): string|Response
     {
         $model = new SignupForm();
+        $signed = false;
+        if($model->load(Yii::$app->request->post())){
+            $signed= $model->signup(
+                $this->mailer,
+                Yii::$app->params['supportEmail'],
+                Yii::$app->name,
+            );
 
-        $signed = $model->load(Yii::$app->request->post()) && $model->signup(
-            $this->mailer,
-            Yii::$app->params['supportEmail'],
-            Yii::$app->name,
-        );
+            if (!$signed) {
+                Yii::$app->session->setFlash('error', $model->getErrorSummary(true));
+            }
+        }
+
 
         if ($signed) {
+
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
         }

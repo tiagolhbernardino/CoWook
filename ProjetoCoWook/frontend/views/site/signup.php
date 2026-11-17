@@ -1,124 +1,91 @@
 <?php
 
-declare(strict_types=1);
-
 /** @var yii\web\View $this */
 /** @var yii\bootstrap5\ActiveForm $form */
 /** @var \frontend\models\SignupForm $model */
 
-use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
+use yii\bootstrap5\ActiveForm;
+use yii\helpers\Url;
 
-$this->title = 'Create a new account';
-$this->params['breadcrumbs'][] = $this->title;
-$this->params['meta_description'] = 'Create a new account to start building with Yii2.';
-$this->params['meta_keywords'] = 'yii, yii2, signup, register, create account';
-$htmlIcon = <<<HTML
-{label}<div class="input-group"><span class="input-group-text" aria-hidden="true">%s</span>{input}</div>{error}{hint}
-HTML;
-$labelOptions = ['class' => 'form-label fw-semibold small'];
+$this->title = 'Registo';
 ?>
-<div class="site-signup d-flex align-items-center justify-content-center py-5">
-    <div class="card border-0 overflow-hidden login-split-card">
-        <div class="row g-0">
 
-            <!-- Brand panel -->
-            <div class="col-md-5 d-none d-md-flex login-brand-panel text-white">
-                <div class="d-flex flex-column justify-content-between p-4 p-lg-5 w-100">
-                    <div>
-                        <?= Html::img(
-                            Yii::getAlias('@web/images/yii3_full_white_for_dark.svg'),
-                            [
-                                'alt' => 'Yii Framework',
-                                'class' => 'mb-4',
-                                'height' => 40,
-                            ],
-                        ) ?>
-                    </div>
-                    <div>
-                        <h2 class="fw-bold mb-3 login-brand-title">
-                            Create Your<br>Account
-                        </h2>
-                        <p class="opacity-75 mb-0 login-brand-text">
-                            Join us and start building amazing applications with Yii2.
-                        </p>
-                    </div>
-                </div>
-            </div>
+<!-- Contentor geral para centrar o cartão, com mais margem/padding no topo para afastar da navbar -->
+<div style="display: flex; justify-content: center; align-items: center; min-height: 85vh; padding: 60px 20px 30px 20px;">
 
-            <!-- Form panel -->
-            <div class="col-md-7">
-                <div class="p-4 p-lg-5">
-                    <div class="text-center mb-4">
-                        <div class="d-md-none mb-3">
-                            <?= Html::img(
-                                Yii::getAlias('@web/images/yii3_full_black_for_light.svg'),
-                                [
-                                    'alt' => 'Yii Framework',
-                                    'class' => 'login-mobile-logo',
-                                    'height' => 36,
-                                ],
-                            ) ?>
-                        </div>
-                        <h1 class="h3 fw-bold mb-1"><?= Html::encode($this->title) ?></h1>
-                        <p class="text-body-secondary small">Fill out the fields below to get started</p>
-                    </div>
+    <!-- Cartão idêntico ao mockup: fundo escuro, contorno branco/cinzento, cantos super arredondados -->
+    <div style="background-color: #0d0d0d; border: 2px solid #cccccc; border-radius: 45px; padding: 35px 30px; max-width: 420px; width: 100%; box-shadow: 0 15px 35px rgba(0,0,0,0.8); color: #ffffff;">
 
-                    <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+        <!-- Título "Registo" em destaque a laranja e centrado -->
+        <h1 style="color: #ef6603; font-size: 2.3rem; font-weight: 700; text-align: center; margin-bottom: 25px;">Registo</h1>
 
-                    <div class="mb-3">
-                        <?= $form->field($model, 'username', [
-                            'options' => ['class' => 'mb-0'],
-                            'template' => sprintf($htmlIcon, '&#128100;'),
-                            'inputOptions' => [
-                                'autofocus' => true,
-                                'class' => 'form-control',
-                                'placeholder' => 'username',
-                            ],
-                        ])->textInput()->label('Your Username', $labelOptions) ?>
-                    </div>
+        <!-- Início do formulário -->
+        <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
-                    <div class="mb-3">
-                        <?= $form->field($model, 'email', [
-                            'options' => ['class' => 'mb-0'],
-                            'template' => sprintf($htmlIcon, '&#9993;'),
-                            'inputOptions' => [
-                                'class' => 'form-control',
-                                'placeholder' => 'email@example.com',
-                            ],
-                        ])->textInput()->label('Your Email', $labelOptions) ?>
-                    </div>
-
-                    <div class="mb-4">
-                        <?= $form->field($model, 'password', [
-                            'options' => ['class' => 'mb-0'],
-                            'template' => sprintf($htmlIcon, '&#128274;'),
-                            'inputOptions' => [
-                                'class' => 'form-control',
-                                'placeholder' => 'Password',
-                            ],
-                        ])->passwordInput()->label('Your Password', $labelOptions) ?>
-                    </div>
-
-                    <div class="d-grid">
-                        <?= Html::submitButton(
-                            'Signup',
-                            [
-                                'class' => 'btn login-btn btn-lg rounded-3 text-white',
-                                'name' => 'signup-button',
-                            ],
-                        ) ?>
-                    </div>
-
-                    <?php ActiveForm::end(); ?>
-
-                    <div class="text-body-secondary text-center mt-3 small">
-                        Already have an account? <?= Html::a('Login', ['site/login']) ?>
-                    </div>
-
-                </div>
-            </div>
-
+        <!-- Campo: Nome Completo -->
+        <div style="margin-bottom: 12px;">
+            <label style="color: #ffffff; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; display: block;">Nome Completo</label>
+            <?= $form->field($model, 'username', ['options' => ['tag' => false]])->textInput([
+                'autofocus' => true,
+                'style' => 'background-color: #161616; border: 1px solid #777777; color: #ffffff; border-radius: 6px; padding: 8px 12px; width: 100%; font-size: 0.9rem;'
+            ])->label(false) ?>
         </div>
+
+        <!--Nome do perfil-->
+        <div style="margin-bottom: 12px;">
+            <label style="color: #ffffff; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; display: block;">Nome de Perfil</label>
+            <?= $form->field($model, 'nome', ['options' => ['tag' => false]])->textInput([
+                'autofocus' => true,
+                'style' => 'background-color: #161616; border: 1px solid #777777; color: #ffffff; border-radius: 6px; padding: 8px 12px; width: 100%; font-size: 0.9rem;'
+            ])->label(false) ?>
+        </div>
+
+        <!-- Campo: Email -->
+        <div style="margin-bottom: 12px;">
+            <label style="color: #ffffff; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; display: block;">Email</label>
+            <?= $form->field($model, 'email', ['options' => ['tag' => false]])->input('email', [
+                'style' => 'background-color: #161616; border: 1px solid #777777; color: #ffffff; border-radius: 6px; padding: 8px 12px; width: 100%; font-size: 0.9rem;'
+            ])->label(false) ?>
+        </div>
+
+        <!-- Campo: Palavra-passe -->
+        <div style="margin-bottom: 12px;">
+            <label style="color: #ffffff; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; display: block;">Palavra-passe</label>
+            <?= $form->field($model, 'password', ['options' => ['tag' => false]])->passwordInput([
+                'style' => 'background-color: #161616; border: 1px solid #777777; color: #ffffff; border-radius: 6px; padding: 8px 12px; width: 100%; font-size: 0.9rem;'
+            ])->label(false) ?>
+        </div>
+
+        <!-- Campo: Reintroduzir Palavra-passe -->
+        <div style="margin-bottom: 12px;">
+            <label style="color: #ffffff; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; display: block;">Reintroduza a palavra passe</label>
+            <?= $form->field($model, 'password_repeat', ['options' => ['tag' => false]])->passwordInput([
+                'style' => 'background-color: #161616; border: 1px solid #777777; color: #ffffff; border-radius: 6px; padding: 8px 12px; width: 100%; font-size: 0.9rem;'
+            ])->label(false) ?>
+        </div>
+
+        <!-- Campo: Morada -->
+        <div style="margin-bottom: 18px;">
+            <label style="color: #ffffff; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; display: block;">Morada</label>
+            <?= $form->field($model, 'morada', ['options' => ['tag' => false]])->textInput([
+                'style' => 'background-color: #161616; border: 1px solid #777777; color: #ffffff; border-radius: 6px; padding: 8px 12px; width: 100%; font-size: 0.9rem;'
+            ])->label(false) ?>
+        </div>
+
+        <!-- Botão de Registar (com o estilo arredondado do mockup) -->
+        <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+            <?= Html::submitButton('Registar', [
+                'style' => 'background-color: #161616; color: #ffffff; border: 1px solid #cccccc; border-radius: 10px; padding: 8px 35px; font-size: 0.95rem; font-weight: 600; cursor: pointer;'
+            ]) ?>
+        </div>
+
+        <!-- Rodapé igual ao mockup ("Tem dúvidas? CLICA AQUI") -->
+        <div style="text-align: center; font-size: 0.8rem; color: #cccccc;">
+            <span>Tem dúvidas? </span>
+            <a href="<?= Url::to(['site/login']) ?>" style="color: #1a66cc; text-decoration: none; font-weight: 600;">CLICA AQUI</a>
+        </div>
+
+        <?php ActiveForm::end(); ?>
     </div>
 </div>

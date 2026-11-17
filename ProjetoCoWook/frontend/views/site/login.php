@@ -1,120 +1,65 @@
 <?php
 
-declare(strict_types=1);
-
 /** @var yii\web\View $this */
 /** @var yii\bootstrap5\ActiveForm $form */
 /** @var \common\models\LoginForm $model */
 
-use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
+use yii\bootstrap5\ActiveForm;
+use yii\helpers\Url;
 
-$this->title = 'Login to your account';
-$this->params['breadcrumbs'][] = $this->title;
-$this->params['meta_description'] = 'Log in to access your Yii2 application account.';
-$this->params['meta_keywords'] = 'yii, yii2, login, sign in, authentication';
-$htmlIcon = <<<HTML
-{label}<div class="input-group"><span class="input-group-text" aria-hidden="true">%s</span>{input}</div>{error}{hint}
-HTML;
-$labelOptions = ['class' => 'form-label fw-semibold small'];
+$this->title = 'Login';
 ?>
-<div class="site-login d-flex align-items-center justify-content-center py-5">
-    <div class="card border-0 overflow-hidden login-split-card">
-        <div class="row g-0">
 
-            <!-- Brand panel -->
-            <div class="col-md-5 d-none d-md-flex login-brand-panel text-white">
-                <div class="d-flex flex-column justify-content-between p-4 p-lg-5 w-100">
-                    <div>
-                        <?= Html::img(
-                            Yii::getAlias('@web/images/yii3_full_white_for_dark.svg'),
-                            [
-                                'alt' => 'Yii Framework',
-                                'class' => 'mb-4',
-                                'height' => 40,
-                            ],
-                        ) ?>
-                    </div>
-                    <div>
-                        <h2 class="fw-bold mb-3 login-brand-title">
-                            Welcome<br>Back
-                        </h2>
-                        <p class="opacity-75 mb-0 login-brand-text">
-                            Log in to access your Yii2 application and manage your account.
-                        </p>
-                    </div>
-                </div>
-            </div>
+<!-- Contentor geral para centrar o cartão no meio do ecrã, com margem de topo para afastar da navbar -->
+<div style="display: flex; justify-content: center; align-items: center; min-height: 82vh; padding: 60px 20px 30px 20px;">
 
-            <!-- Form panel -->
-            <div class="col-md-7">
-                <div class="p-4 p-lg-5">
-                    <div class="text-center mb-4">
-                        <!-- Mobile-only logo -->
-                        <div class="d-md-none mb-3">
-                            <?= Html::img(
-                                Yii::getAlias('@web/images/yii3_full_black_for_light.svg'),
-                                [
-                                    'alt' => 'Yii Framework',
-                                    'class' => 'login-mobile-logo',
-                                    'height' => 36,
-                                ],
-                            ) ?>
-                        </div>
-                        <h1 class="h3 fw-bold mb-1"><?= Html::encode($this->title) ?></h1>
-                        <p class="text-body-secondary small">Enter your credentials to continue</p>
-                    </div>
+    <!-- Cartão idêntico ao do Registo: fundo escuro, contorno cinzento, cantos super arredondados -->
+    <div style="background-color: #0d0d0d; border: 2px solid #cccccc; border-radius: 45px; padding: 40px 30px; max-width: 420px; width: 100%; box-shadow: 0 15px 35px rgba(0,0,0,0.8); color: #ffffff;">
 
-                    <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+        <!-- Título "Login" em destaque a laranja e centrado -->
+        <h1 style="color: #ef6603; font-size: 2.3rem; font-weight: 700; text-align: center; margin-bottom: 30px;">Login</h1>
 
-                    <div class="mb-3">
-                        <?= $form->field($model, 'username', [
-                            'options' => ['class' => 'mb-0'],
-                            'template' => sprintf($htmlIcon, '&#128100;'),
-                            'inputOptions' => [
-                                'class' => 'form-control',
-                                'placeholder' => 'username',
-                                'autofocus' => true,
-                            ],
-                        ])->textInput()->label('Your Username', $labelOptions) ?>
-                    </div>
+        <!-- Início do formulário de Login -->
+        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                    <div class="mb-3">
-                        <?= $form->field($model, 'password', [
-                            'options' => ['class' => 'mb-0'],
-                            'template' => sprintf($htmlIcon, '&#128274;'),
-                            'inputOptions' => [
-                                'class' => 'form-control',
-                                'placeholder' => 'Password',
-                            ],
-                        ])->passwordInput()->label('Your Password', $labelOptions) ?>
-                    </div>
-
-                    <div class="mb-4">
-                        <?= $form->field($model, 'rememberMe')->checkbox() ?>
-                    </div>
-
-                    <div class="d-grid">
-                        <?= Html::submitButton(
-                            'Login',
-                            [
-                                'class' => 'btn login-btn btn-lg rounded-3 text-white',
-                                'name' => 'login-button',
-                            ],
-                        ) ?>
-                    </div>
-
-                    <?php ActiveForm::end(); ?>
-
-                    <div class="text-body-secondary text-center mt-3 small">
-                        <?= Html::a('Forgot your password?', ['site/request-password-reset']) ?>
-                        <span class="mx-1">&middot;</span>
-                        <?= Html::a('Resend verification email', ['site/resend-verification-email']) ?>
-                    </div>
-
-                </div>
-            </div>
-
+        <!-- Campo: Nome Utilizador / Username -->
+        <div style="margin-bottom: 15px;">
+            <label style="color: #ffffff; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; display: block;">Email</label>
+            <?= $form->field($model, 'email', ['options' => ['tag' => false]])->textInput([
+                'autofocus' => true,
+                'style' => 'background-color: #161616; border: 1px solid #777777; color: #ffffff; border-radius: 6px; padding: 9px 12px; width: 100%; font-size: 0.9rem;'
+            ])->label(false) ?>
         </div>
+
+        <!-- Campo: Palavra-passe / Senha -->
+        <div style="margin-bottom: 20px;">
+            <label style="color: #ffffff; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; display: block;">Senha</label>
+            <?= $form->field($model, 'password', ['options' => ['tag' => false]])->passwordInput([
+                'style' => 'background-color: #161616; border: 1px solid #777777; color: #ffffff; border-radius: 6px; padding: 9px 12px; width: 100%; font-size: 0.9rem;'
+            ])->label(false) ?>
+        </div>
+
+        <!-- Checkbox: Manter sessão iniciada -->
+        <div style="margin-bottom: 20px; text-align: center;">
+            <?= $form->field($model, 'rememberMe')->checkbox([
+                'label' => 'Manter a sessão iniciada',
+                'labelOptions' => ['style' => 'color: #cccccc; font-size: 0.85rem; cursor: pointer;']
+            ]) ?>
+        </div>
+
+        <!-- Botão de Login (com o estilo arredondado idêntico ao registo) -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <?= Html::submitButton('LOGIN', [
+                'style' => 'background-color: #161616; color: #ffffff; border: 1px solid #cccccc; border-radius: 10px; padding: 8px 35px; font-size: 0.95rem; font-weight: 600; cursor: pointer;'
+            ]) ?>
+        </div>
+
+        <!-- Link de recuperação de palavra-passe -->
+        <div style="text-align: center; font-size: 0.8rem; color: #cccccc;">
+            <a href="<?= Url::to(['site/request-password-reset']) ?>" style="color: #1a66cc; text-decoration: none; font-weight: 600;">Esqueceu a palavra-passe?</a>
+        </div>
+
+        <?php ActiveForm::end(); ?>
     </div>
 </div>

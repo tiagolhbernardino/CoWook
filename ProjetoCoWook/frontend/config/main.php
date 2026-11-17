@@ -19,15 +19,14 @@ return [
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
-            'identityClass' => \common\models\User::class,
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'identityClass' => 'common\models\User',
+            'enableAutoLogin' => false,
+            'identityCookie' => ['name' => '_identity-cowook', 'httpOnly' => true],
         ],
         'session' => [
-            // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
-        ],
-        'log' => [
+            // Usar o mesmo nome no frontend e no backend faz partilhar o utilizador logado
+            'name' => 'advanced-cowook',
+        ],        'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [

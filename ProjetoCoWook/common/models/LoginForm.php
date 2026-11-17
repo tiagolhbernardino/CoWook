@@ -1,62 +1,72 @@
 <?php
 
-declare(strict_types=1);
-
 namespace common\models;
 
 use Yii;
 use yii\base\Model;
 
 /**
- * Login form
+ * LoginForm é o modelo partilhado responsável por validar e processar os dados do formulário de login
+ * (utilizado tanto no Frontend como no Backend).
  */
 class LoginForm extends Model
 {
-    public string $username = '';
+    // Atributos públicos do formulário de login (substituímos o 'username' por 'email')
+    public string $email = '';
     public string $password = '';
     public bool $rememberMe = true;
-    private User|null $_user = null;
+
+    // Variável privada para guardar a instância do utilizador em cache durante a execução
+    private $_user = false;
+
     /**
      * {@inheritdoc}
+     * Define as regras de validação para os campos do formulário de login.
      */
     public function rules(): array
     {
         return [
-            // username and password are both required
-            [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
-            ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
+            // Validações para o campo 'email'
+            ['email', 'trim'],
+            ['email', 'required', 'message' => 'O email é obrigatório.'],
+            ['email', 'email', 'message' => 'Introduza um email válido.'],
+
+            // Validações para o campo 'password'
+            ['password', 'required', 'message' => 'A palavra-passe é obrigatória.'],
+
+            // Validação personalizada que chama a função validatePassword abaixo
             ['password', 'validatePassword'],
         ];
     }
 
     /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
+     * Valida a palavra-passe inserida pelo utilizador.
+     * Esta função é acionada automaticamente pelas regras definidas em rules().
      *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
+     * @param string $attribute O atributo a ser validado ('password')
+     * @param array $params Parâmetros adicionais da regra
      */
-    public function validatePassword(string $attribute, array|null $params): void
+    public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
+            // Se o utilizador não existir ou a password estiver incorreta, adiciona uma mensagem de erro
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Email ou palavra-passe incorretos.');
             }
         }
     }
 
     /**
-     * Logs in a user using the provided username and password.
+     * Efetua o login do utilizador se a validação passar com sucesso.
      *
-     * @return bool whether the user is logged in successfully
+     * @return bool True se o login for bem-sucedido, False caso contrário
      */
     public function login(): bool
     {
         if ($this->validate()) {
+            // Regista a sessão do utilizador no Yii2 (mantém logado por 30 dias se 'rememberMe' for verdadeiro)
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
 
@@ -64,14 +74,19 @@ class LoginForm extends Model
     }
 
     /**
-     * Finds user by [[username]]
+     * Encontra e devolve o utilizador com base no email introduzido.
+     * Utiliza cache interna ($this->_user) para evitar consultas repetidas à base de dados.
      *
      * @return User|null
      */
-    protected function getUser(): User|null
+    protected function getUser()
     {
-        if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
+        if ($this->_user === false) {
+            // Procura na tabela de utilizadores pelo email correspondente e estado ativo (status 10)
+            $this->_user = User::findOne([
+                'email' => $this->email,
+                'status' => User::STATUS_ACTIVE,
+            ]);
         }
 
         return $this->_user;
